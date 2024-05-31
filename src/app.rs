@@ -36,10 +36,11 @@ impl App {
 
     pub async fn run(&self) -> Result<(), anyhow::Error> {
         self.pipeline.prepare()?;
-        let bin = self.pipeline.pipeline.clone().upcast::<gst::Bin>();
-        let mut gw = janus::JanusGateway::new(bin).await?;
+        // let bin = self.pipeline.pipeline.clone().upcast::<gst::Bin>();
+        // let mut gw = janus::JanusGateway::new(bin).await?;
         self.pipeline.start()?;
-        gw.run().await?;
+        //gw.run().await?;
+        futures::future::pending::<()>().await;
         Ok(())
     }
 }

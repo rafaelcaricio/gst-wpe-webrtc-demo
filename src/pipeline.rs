@@ -45,9 +45,10 @@ impl Pipeline {
         };
 
         let pipeline = gst::parse_launch(&format!(
-            "webrtcbin name=webrtcbin stun-server=stun://stun2.l.google.com:19302 \
-             glvideomixerelement name=mixer sink_1::zorder=0 sink_1::height={height} sink_1::width={width} \
-             ! tee name=video-tee ! queue ! gtkglsink enable-last-sample=0 name=sink qos=0 \
+            // "webrtcbin name=webrtcbin stun-server=stun://stun2.l.google.com:19302 \
+            //  gtkglsink enable-last-sample=0 name=sink qos=0
+             "glvideomixerelement name=mixer sink_1::zorder=0 sink_1::height={height} sink_1::width={width} \
+             ! tee name=video-tee ! queue ! gldownload ! videoconvert ! uvcsink v4l2sink::device=/dev/video0 \
              wpesrc location=http://127.0.0.1:3000 name=wpesrc draw-background=0 \
              ! capsfilter name=wpecaps caps=\"video/x-raw(memory:GLMemory),width={width},height={height},pixel-aspect-ratio=(fraction)1/1\" ! glcolorconvert ! queue ! mixer. \
              v4l2src name=videosrc ! capsfilter name=camcaps caps=\"image/jpeg,width={width},height={height},framerate=30/1\" !  queue ! jpegparse ! queue ! jpegdec ! videoconvert ! queue ! glupload ! glcolorconvert
