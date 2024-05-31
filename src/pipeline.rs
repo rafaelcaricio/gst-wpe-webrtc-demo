@@ -38,11 +38,12 @@ impl Pipeline {
     pub fn new() -> Result<Self, Box<dyn error::Error>> {
         let settings = utils::load_settings();
 
-        let (width, height) = match settings.video_resolution {
-            VideoResolution::V480P => (640, 480),
-            VideoResolution::V720P => (1280, 720),
-            VideoResolution::V1080P => (1920, 1080),
-        };
+        // let (width, height) = match settings.video_resolution {
+        //     VideoResolution::V480P => (640, 480),
+        //     VideoResolution::V720P => (1280, 720),
+        //     VideoResolution::V1080P => (1920, 1080),
+        // };
+        let (width, height) = (1280, 720);
 
         let pipeline = gst::parse_launch(&format!(
             // "webrtcbin name=webrtcbin stun-server=stun://stun2.l.google.com:19302 \
